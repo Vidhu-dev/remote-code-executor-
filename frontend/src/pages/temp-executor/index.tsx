@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef, FC } from 'react'
-import { io, Socket } from 'socket.io-client'
-import { nanoid } from 'nanoid'
 import Navbar from '../../components/Navbar'
+import handleCode from '../../assets/api'
+import io from 'socket.io-client'
+import { nanoid } from 'nanoid'
 import Code from '../../components/Code'
 import Output from '../../components/Output'
 import Input from '../../components/Input'
 import Language from '../../components/Language'
 import Fileupload from '../../components/Fileupload'
 import JoinRoomModal from '../../components/JoinRoomModal'
-import handleCode from '../../assets/api'
 
 const ENDPOINT = 'http://localhost:4000'
 
@@ -22,59 +22,53 @@ const CodeExecution: FC = () => {
   const [mode, setMode] = useState<string>('c_cpp')
   const [room, setRoom] = useState<string>('')
   const [userName, setUserName] = useState<string>('')
-  const [socket, setSocket] = useState<Socket | undefined>(undefined) // Changed from null to undefined
+  const [socket, setSocket] = useState<any>(null)
   const [isSocketConnected, setIsSocketConnected] = useState<boolean>(false)
   const [modal, setModal] = useState<boolean>(false)
   const roomInput = useRef<HTMLInputElement | null>(null)
+  let newUser = true
 
   useEffect(() => {
-    const newSocket = io(ENDPOINT)
-    setSocket(newSocket)
-
-    return () => {
-      newSocket.disconnect()
+    if (room && userName) {
+      setIsSocketConnected(true)
+      setSocket(io(ENDPOINT))
     }
-  }, [ENDPOINT])
+  }, [room, userName])
 
   useEffect(() => {
     if (socket) {
-      socket.on('joinRoom', (message: string) => {
-        console.log('Join room listen ', message)
+      socket.emit('joinRoom', { userName, room }, () => {
+        console.log(userName, room)
       })
-
+      socket.on('joinRoom', (message: string) => {
+        console.log('Join room listen ', message, code)
+      })
       socket.on('sendCode', (message: string) => {
+        console.log(message)
         setCode(message)
       })
-
       socket.on('sendInput', (message: string) => {
+        console.log(message)
         setInput(message)
       })
-
       socket.on('sendLang', (message: string) => {
+        console.log(message)
         setSelectedLanguage(message)
       })
-
       socket.on('sendOutput', (message: string) => {
+        console.log(message)
         setOutput(message)
       })
-
-      return () => {
-        socket.off('joinRoom')
-        socket.off('sendCode')
-        socket.off('sendInput')
-        socket.off('sendOutput')
-        socket.off('sendLang')
-      }
     }
   }, [socket])
 
+  const toggleModal = () => setModal(!modal)
+
   const joinRoom = (e: React.FormEvent) => {
     e.preventDefault()
-    const roomValue = roomInput.current?.value
-    if (roomValue && roomValue.length === 10) {
-      setRoom(roomValue)
+    if (roomInput.current?.value && roomInput.current.value.length === 10) {
+      setRoom(roomInput.current.value)
       setUserName(nanoid(15))
-      setIsSocketConnected(true)
     } else {
       console.log('Invalid room ID')
     }
@@ -82,29 +76,31 @@ const CodeExecution: FC = () => {
   }
 
   const leaveRoom = () => {
-    if (socket) {
-      socket.emit('leaveRoom', { userName, room })
-      setIsSocketConnected(false)
-      setRoom('')
-      setUserName('')
-      setSocket(undefined) // Changed from null to undefined
-    }
+    socket.emit('leaveRoom', { userName, room }, () => {
+      console.log(userName, room)
+    })
+    socket.off('joinRoom')
+    socket.off('sendCode')
+    socket.off('sendInput')
+    socket.off('sendOutput')
+    socket.off('sendLang')
+    socket.disconnect()
+    setIsSocketConnected(false)
+    setSocket(null)
+    setRoom('')
+    setUserName('')
   }
 
   const runCode = (e: React.FormEvent) => {
     e.preventDefault()
-    if (socket) {
-      handleCode(code, input, selectedLanguage, setOutput, socket)
-    }
+    handleCode(code, input, selectedLanguage, setOutput, socket)
   }
-
-  const toggleModal = () => setModal(!modal)
 
   return (
     <div className="p-4 bg-gray-50 min-h-screen">
       {modal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <JoinRoomModal roomInputRef={roomInput} onJoinRoom={joinRoom} />
+          {JoinRoomModal(roomInput, joinRoom)}
         </div>
       )}
       <Navbar />
@@ -161,6 +157,7 @@ const CodeExecution: FC = () => {
                 onClick={() => {
                   setUserName(nanoid(15))
                   setRoom(nanoid(10))
+                  newUser = false
                 }}
               >
                 Create Room
@@ -185,3 +182,4 @@ const CodeExecution: FC = () => {
 }
 
 export default CodeExecution
+

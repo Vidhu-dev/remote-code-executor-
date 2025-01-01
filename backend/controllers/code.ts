@@ -69,7 +69,7 @@ export const code = (req: Request, res: Response): void => {
         fs.writeFile(`${fileName}.java`, code, (err) => {
           if (err) {
             console.error(err);
-            res.json({ err: err.stdout });
+            res.json({ err: err.message });
           } else {
             java(fileName, input, res);
           }

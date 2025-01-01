@@ -8,5 +8,10 @@
     "esModuleInterop": true
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": [
+    "node_modules", // Exclude dependencies
+    "dist", // Exclude build output
+    "**/*.spec.ts", // Exclude spec files
+    "**/*.test.ts" // Exclude test files
+  ]
 }
