@@ -73,6 +73,9 @@ const java = (fileName: string, input: string, res: Response): void => {
           });
       })
       .catch((err) => {
+        exec(`rm ${fileName}.java && rm ${fileName}.txt`).then(() => {
+          console.log('Failed to start Docker container, files removed')
+        })
         console.error(err);
         res.json({ err: "Failed to start Docker container" });
       });

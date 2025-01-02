@@ -74,6 +74,9 @@ const cpp = (fileName: string, input: string, res: Response): void => {
       })
       .catch((err) => {
         console.error(err);
+        exec(`rm ${fileName}.cpp && rm ${fileName}.txt`).then(() => {
+          console.log('Failed to start Docker container, files removed')
+        })
         res.json({ err: "Failed to start Docker container" });
       });
   });

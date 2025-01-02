@@ -10,8 +10,7 @@ import Language from '../../components/Language'
 import Fileupload from '../../components/Fileupload'
 import JoinRoomModal from '../../components/JoinRoomModal'
 import Button from '../../components/Button'
-import { i } from 'motion/react-client'
-import { Play, Section } from 'lucide-react'
+import { Play } from 'lucide-react'
 
 const ENDPOINT = 'http://localhost:4000'
 
@@ -66,15 +65,15 @@ const CodeExecution: FC = () => {
   }, [socket])
 
   const toggleModal = () => setModal(!modal)
+  const joinRoom = (roomId: string) => {
+    if (roomId && roomId.length === 10) {
+      setRoom(roomId)
 
-  const joinRoom = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (roomInput.current?.value && roomInput.current.value.length === 10) {
-      setRoom(roomInput.current.value)
       setUserName(nanoid(15))
     } else {
       console.log('Invalid room ID')
     }
+
     toggleModal()
   }
 
@@ -103,7 +102,7 @@ const CodeExecution: FC = () => {
     <div className=" flex flex-col h-screen">
       {modal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          {JoinRoomModal(roomInput, joinRoom)}
+          <JoinRoomModal roomInputRef={roomInput} onJoinRoom={joinRoom} />
         </div>
       )}
       <Navbar />

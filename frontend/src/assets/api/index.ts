@@ -55,7 +55,7 @@ function handleCode(
     headers: {
       'Content-Type': 'application/json',
     },
-    // credentials: "include", // Uncomment and add CORS configuration for the server URL when needed
+    // credentials: "include", 
     body: JSON.stringify({
       code,
       input,

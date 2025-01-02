@@ -48,12 +48,11 @@ const JoinRoomModal: FC<JoinRoomModalProps> = ({
           ref={roomInputRef}
           type="text"
           placeholder="e.g. 123ABC"
-          className="w-full p-2 border border-gray-300 rounded-lg mb-2"
+          className="w-full p-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring focus:ring-blue-500"
           required
         />
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-        <Button >Join Room</Button>{' '}
-        {/* Adjusted to be a submit button */}
+        <Button type='primary'>Join Room</Button>
       </form>
     </div>
   )
