@@ -25,12 +25,12 @@ const Input: FC<InputProps> = ({ input, setInput, socket }) => {
   }
 
   return (
-    <div className="p-4 bg-gray-50 rounded-lg shadow-md">
+    <div className="p-4 bg-gray-50 rounded-lg shadow-md flex flex-col">
       <div className="mb-2">
         <h2 className="text-lg font-semibold text-gray-700">Input.txt</h2>
       </div>
       <textarea
-        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full p-3  grow border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 "
         placeholder="Enter your input here"
         value={input}
         onChange={handleChange}

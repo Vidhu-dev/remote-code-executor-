@@ -58,7 +58,7 @@ const Language: FC<LanguageProps> = ({
 
   return (
     <select
-      className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className=" px-3 py-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
       onChange={onLanguageChange}
     >
       <option value="C++">C++</option>

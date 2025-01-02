@@ -1,4 +1,5 @@
-import React, { FC } from 'react'
+import { div } from 'motion/react-client'
+import { FC } from 'react'
 
 interface FileUploadProps {
   setCode: (code: string) => void
@@ -76,16 +77,14 @@ const FileUpload: FC<FileUploadProps> = ({
   }
 
   return (
-    <div className="p-4 bg-gray-50 rounded-lg shadow-md">
-      <input
-        type="file"
-        className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
-        onChange={(e) => {
-          const file = e.target.files?.[0]
-          if (file) handleFileChosen(file)
-        }}
-      />
-    </div>
+    <input
+      type="file"
+      className=" text-sm rounded-lg px-3 py-2 border w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      onChange={(e) => {
+        const file = e.target.files?.[0]
+        if (file) handleFileChosen(file)
+      }}
+    />
   )
 }
 

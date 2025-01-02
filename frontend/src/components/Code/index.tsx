@@ -35,10 +35,7 @@ const Code: FC<CodeProps> = ({ code, setCode, mode, socket }) => {
   }
 
   return (
-    <div
-      id="editor"
-      className="h-full w-full border border-gray-300 rounded-lg shadow-md bg-gray-50"
-    >
+    <div id="editor" className="h-full w-full border  rounded-lg ">
       <AceEditor
         mode={mode}
         width="100%"

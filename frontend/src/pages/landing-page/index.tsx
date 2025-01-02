@@ -60,7 +60,7 @@ const LandingPage: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 0.8 }}
         >
-          <Button type="primary" onClick={() => navigate('/login')}>
+          <Button type="primary" onClick={() => navigate('/login')} size='big'>
             Get Started <span className=" text-xl"> &#8594;</span>
           </Button>
         </motion.div>

@@ -49,10 +49,12 @@ const SignIn: React.FC = () => {
         >
           <h2 className="text-3xl font-bold text-gray-300 mb-8 ">Sign In</h2>
           <div className="flex flex-col space-y-4">
-            <Button type="primary" onClick={handleGoogleSignIn}>
+            <Button type="primary" onClick={handleGoogleSignIn} size="big">
               Continue with Google
             </Button>
-            <Button type="secondary">Continue with GitHub</Button>
+            <Button type="secondary" size="big">
+              Continue with GitHub
+            </Button>
           </div>
           <p className="mt-6 text-center text-sm text-gray-400">
             By signing in, you agree to our{' '}
