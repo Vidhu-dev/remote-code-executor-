@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  coexe-backend:
+    build: .
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/usr/nodeapp
+      - /usr/nodeapp/dist
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      PORT: 4000
