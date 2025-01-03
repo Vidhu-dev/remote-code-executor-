@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
-import LandingPage from './pages/landing-page'
-import SignIn from './pages/authentication'
+// import LandingPage from './pages/landing-page'
+// import SignIn from './pages/authentication'
 import CodeExecutor from './pages/code-executor '
 const router = createBrowserRouter([
   // {

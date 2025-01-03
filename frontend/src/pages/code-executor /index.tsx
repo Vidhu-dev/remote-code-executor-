@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, FC } from 'react'
+import { useState, useEffect, useRef, FC } from 'react'
 import Navbar from '../../components/Navbar'
 import handleCode from '../../assets/api'
 import io from 'socket.io-client'
@@ -28,7 +28,8 @@ const CodeExecution: FC = () => {
   const [isSocketConnected, setIsSocketConnected] = useState<boolean>(false)
   const [modal, setModal] = useState<boolean>(false)
   const roomInput = useRef<HTMLInputElement | null>(null)
-  let newUser = true
+
+  // Removed unused variable 'newUser'
 
   useEffect(() => {
     if (room && userName) {
@@ -65,10 +66,10 @@ const CodeExecution: FC = () => {
   }, [socket])
 
   const toggleModal = () => setModal(!modal)
+
   const joinRoom = (roomId: string) => {
     if (roomId && roomId.length === 10) {
       setRoom(roomId)
-
       setUserName(nanoid(15))
     } else {
       console.log('Invalid room ID')
@@ -78,28 +79,30 @@ const CodeExecution: FC = () => {
   }
 
   const leaveRoom = () => {
-    socket.emit('leaveRoom', { userName, room }, () => {
-      console.log(userName, room)
-    })
-    socket.off('joinRoom')
-    socket.off('sendCode')
-    socket.off('sendInput')
-    socket.off('sendOutput')
-    socket.off('sendLang')
-    socket.disconnect()
-    setIsSocketConnected(false)
-    setSocket(null)
-    setRoom('')
-    setUserName('')
+    if (socket) {
+      socket.emit('leaveRoom', { userName, room }, () => {
+        console.log(userName, room)
+      })
+      socket.off('joinRoom')
+      socket.off('sendCode')
+      socket.off('sendInput')
+      socket.off('sendOutput')
+      socket.off('sendLang')
+      socket.disconnect()
+      setIsSocketConnected(false)
+      setSocket(null)
+      setRoom('')
+      setUserName('')
+    }
   }
 
-  const runCode = (e: React.FormEvent) => {
-    e.preventDefault()
+  // Updated runCode to not accept any parameters
+  const runCode = () => {
     handleCode(code, input, selectedLanguage, setOutput, socket)
   }
 
   return (
-    <div className=" flex flex-col h-screen">
+    <div className="flex flex-col h-screen">
       {modal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <JoinRoomModal roomInputRef={roomInput} onJoinRoom={joinRoom} />
@@ -107,7 +110,7 @@ const CodeExecution: FC = () => {
       )}
       <Navbar />
 
-      <div className=" px-4 py-2  flex flex-wrap items-center justify-between border border-gray-300">
+      <div className="px-4 py-2 flex flex-wrap items-center justify-between border border-gray-300">
         <div>
           <Button
             onClick={runCode}
@@ -115,7 +118,7 @@ const CodeExecution: FC = () => {
             className="flex items-center gap-2"
           >
             <Play size={16} /> Run
-          </Button>{' '}
+          </Button>
         </div>
         <div className="flex items-center gap-2">
           <Fileupload
@@ -124,6 +127,7 @@ const CodeExecution: FC = () => {
             setMode={setMode}
           />
           <Language
+            // Ensure that the Language component accepts 'selectedLanguage' in its props
             selectedLanguage={selectedLanguage}
             socket={socket}
             setMode={setMode}
@@ -159,7 +163,7 @@ const CodeExecution: FC = () => {
                 onClick={() => {
                   setUserName(nanoid(15))
                   setRoom(nanoid(10))
-                  newUser = false
+                  // Removed 'newUser = false' as 'newUser' is no longer used
                 }}
                 type="primary"
               >
