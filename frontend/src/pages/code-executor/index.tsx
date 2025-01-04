@@ -13,9 +13,9 @@ import Button from '../../components/Button'
 import { Play } from 'lucide-react'
 
 // const ENDPOINT = 'http://localhost:4000'
-// const ENDPOINT = 'https://remote-code-executor.onrender.com'
+// const ENDPOINT = 'https://remccote-code-executor.onrender.com'
 
-const ENDPOINT = 'http://13.127.248.122:4000'
+const ENDPOINT = 'http://3.110.153.2:4000'
 const CodeExecution: FC = () => {
   const [code, setCode] = useState<string>('//you can enter your code here')
   const [input, setInput] = useState<string>('')
