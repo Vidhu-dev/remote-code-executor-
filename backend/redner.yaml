@@ -1,0 +1,50 @@
+services:
+  - name: cpp
+    type: service
+    dockerfilePath: ./dockerfiles/cpp/Dockerfile
+    buildCommand: docker build -t backend-cpp:v1 .
+    startCommand: sh -c "echo 'CPP environment ready'"
+    mounts:
+      - path: /usr/cpp/cpp.ts
+        source: ./utils/langController/cpp.ts
+        readOnly: true
+
+  - name: java
+    type: service
+    dockerfilePath: ./dockerfiles/java/Dockerfile
+    buildCommand: docker build -t backend-java:v1 .
+    startCommand: sh -c "java -version"
+    mounts:
+      - path: /usr/java/java.ts
+        source: ./utils/langController/java.ts
+        readOnly: true
+
+  - name: python
+    type: service
+    dockerfilePath: ./dockerfiles/python/Dockerfile
+    buildCommand: docker build -t backend-py:v1 .
+    startCommand: sh -c "python3 --version"
+    mounts:
+      - path: /usr/py/python.ts
+        source: ./utils/langController/python.ts
+        readOnly: true
+
+  - name: backend
+    type: web
+    dockerfilePath: ./Dockerfile
+    ports:
+      - 4000
+    mounts:
+      - path: /usr/nodeapp
+        source: .
+      - path: /usr/nodeapp/dist
+        source: /usr/nodeapp/dist
+      - path: /var/run/docker.sock
+        source: /var/run/docker.sock
+    envVars:
+      - key: PORT
+        value: 4000
+    dependsOn:
+      - cpp
+      - java
+      - python
