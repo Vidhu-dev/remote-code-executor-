@@ -2,14 +2,14 @@ import React, { FC } from 'react'
 import { Socket } from 'socket.io-client'
 
 interface LanguageProps {
-  selectedLanguage: string 
+  selectedLanguage: string
   setSelectedLanguage: (language: string) => void
   setMode: (mode: string) => void
-  socket?: Socket 
+  socket?: Socket
 }
 
 const Language: FC<LanguageProps> = ({
-  selectedLanguage, 
+  selectedLanguage,
   setSelectedLanguage,
   setMode,
   socket,
@@ -21,24 +21,24 @@ const Language: FC<LanguageProps> = ({
   const onLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     e.preventDefault()
     const languageOption = e.target.value
-    console.log('Selected option:', selectedLanguage)
+    console.log('Selected option:', languageOption) // Updated to log the new selection
     let language: string
     let modeValue: string
 
     switch (languageOption) {
-      case 'C++':
+      case 'cpp':
         language = 'cpp'
         modeValue = 'c_cpp'
         break
-      case 'C':
+      case 'c':
         language = 'c'
         modeValue = 'c_cpp'
         break
-      case 'Java':
+      case 'java':
         language = 'java'
         modeValue = 'java'
         break
-      case 'Python':
+      case 'python':
         language = 'python'
         modeValue = 'python'
         break
@@ -65,10 +65,10 @@ const Language: FC<LanguageProps> = ({
         onChange={onLanguageChange}
         value={selectedLanguage}
       >
-        <option value="C++">C++</option>
-        <option value="C">C</option>
-        <option value="Java">Java</option>
-        <option value="Python">Python</option>
+        <option value="cpp">C++</option> {/* Updated value */}
+        <option value="c">C</option> {/* Updated value */}
+        <option value="java">Java</option>
+        <option value="python">Python</option>
       </select>
     </div>
   )
