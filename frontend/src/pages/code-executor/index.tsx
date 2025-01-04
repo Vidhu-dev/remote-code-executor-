@@ -12,7 +12,8 @@ import JoinRoomModal from '../../components/JoinRoomModal'
 import Button from '../../components/Button'
 import { Play } from 'lucide-react'
 
-const ENDPOINT = 'http://localhost:4000'
+// const ENDPOINT = 'http://localhost:4000'
+const ENDPOINT = 'https://remote-code-executor.onrender.com'
 
 const CodeExecution: FC = () => {
   const [code, setCode] = useState<string>('//you can enter your code here')
@@ -20,7 +21,7 @@ const CodeExecution: FC = () => {
   const [output, setOutput] = useState<string>(
     'Press the run button to see the output'
   )
-  const [selectedLanguage, setSelectedLanguage] = useState<string>('C++')
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('cpp')
   const [mode, setMode] = useState<string>('c_cpp')
   const [room, setRoom] = useState<string>('')
   const [userName, setUserName] = useState<string>('')
