@@ -23,7 +23,7 @@ const java = (fileName: string, input: string, res: Response): void => {
     }
 
     // Start the Docker container
-    exec(`docker run -d -it backend-java:v1 sh`)
+    exec(`docker run -d -it lostvidhu/coexe-java:v1 sh`)
       .then((response) => {
         const containerId = response.stdout.substring(0, 12)
         console.log(containerId)

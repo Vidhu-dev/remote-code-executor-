@@ -2,25 +2,25 @@ version: '3.8'
 
 services:
   cpp:
-    image: backend-cpp:v1
+    image: lostvidhu/coexe-cpp:v1
     build:
       context: ./dockerfiles/cpp
       dockerfile: Dockerfile
     volumes:
       - ./utils/langController/cpp.ts:/usr/cpp/cpp.ts:ro
     command: ["sh", "-c", "echo 'CPP environment ready'"]
-  
+
   java:
-    image: backend-java:v1
+    image: lostvidhu/coexe-java:v1
     build:
       context: ./dockerfiles/java
       dockerfile: Dockerfile
     volumes:
       - ./utils/langController/java.ts:/usr/java/java.ts:ro
     command: ["sh", "-c", "java -version"]
-  
+
   python:
-    image: backend-py:v1
+    image: lostvidhu/coexe-py:v1
     build:
       context: ./dockerfiles/python
       dockerfile: Dockerfile
@@ -29,6 +29,7 @@ services:
     command: ["sh", "-c", "python3 --version"]
 
   backend:
+    image: lostvidhu/coexe-node:v1
     build:
       context: .
       dockerfile: Dockerfile
