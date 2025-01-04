@@ -15,7 +15,7 @@ import { Play } from 'lucide-react'
 // const ENDPOINT = 'http://localhost:4000'
 // const ENDPOINT = 'https://remccote-code-executor.onrender.com'
 
-const ENDPOINT = 'http://3.110.153.2:4000'
+const ENDPOINT = 'https://coexe-backend.vidhu.tech'
 const CodeExecution: FC = () => {
   const [code, setCode] = useState<string>('//you can enter your code here')
   const [input, setInput] = useState<string>('')
