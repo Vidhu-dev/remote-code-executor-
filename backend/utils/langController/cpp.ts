@@ -23,7 +23,7 @@ const cpp = (fileName: string, input: string, res: Response): void => {
     }
 
     // Start the Docker container
-    exec(`docker run -d -it cpp:v1 sh`)
+    exec(`docker run -d -it backend-cpp:v1 sh`)
       .then((response) => {
         const containerId = response.stdout.substring(0, 12);
         console.log(containerId);

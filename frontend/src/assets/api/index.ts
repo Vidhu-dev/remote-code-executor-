@@ -1,6 +1,6 @@
-// const baseURL = 'http://localhost:4000'
+const baseURL = 'http://localhost:4000'
 
-const baseURL = 'http://13.235.77.142:4000'
+// const baseURL = 'http://13.235.77.142:4000'
 interface OutputData {
   stdout?: string
   stderr?: string

@@ -23,10 +23,10 @@ const java = (fileName: string, input: string, res: Response): void => {
     }
 
     // Start the Docker container
-    exec(`docker run -d -it java:v1 sh`)
+    exec(`docker run -d -it backend-java:v1 sh`)
       .then((response) => {
-        const containerId = response.stdout.substring(0, 12);
-        console.log(containerId);
+        const containerId = response.stdout.substring(0, 12)
+        console.log(containerId)
 
         // Copy files to the container
         exec(
@@ -38,47 +38,47 @@ const java = (fileName: string, input: string, res: Response): void => {
               `docker exec -t ${containerId} sh -c "javac test.java && java test<${fileName}.txt"`
             )
               .then((resp) => {
-                console.log(resp);
-                res.status(201).json(resp);
+                console.log(resp)
+                res.status(201).json(resp)
 
                 // Clean up: Remove container and local files
                 exec(
                   `docker rm -f ${containerId} && rm ${fileName}.java && rm ${fileName}.txt`
                 ).then(() => {
-                  console.log("Container and files removed");
-                });
+                  console.log('Container and files removed')
+                })
               })
               .catch((err) => {
-                console.error(err);
-                res.json({ stderr: err.stdout });
+                console.error(err)
+                res.json({ stderr: err.stdout })
 
                 // Clean up in case of error
                 exec(
                   `docker rm -f ${containerId} && rm ${fileName}.java && rm ${fileName}.txt`
                 ).then(() => {
-                  console.log("Container and files removed");
-                });
-              });
+                  console.log('Container and files removed')
+                })
+              })
           })
           .catch((err) => {
-            console.error(err);
-            res.json({ stderr: err.stderr });
+            console.error(err)
+            res.json({ stderr: err.stderr })
 
             // Clean up in case of error
             exec(
               `docker rm -f ${containerId} && rm ${fileName}.java && rm ${fileName}.txt`
             ).then(() => {
-              console.log("Container and files removed");
-            });
-          });
+              console.log('Container and files removed')
+            })
+          })
       })
       .catch((err) => {
         exec(`rm ${fileName}.java && rm ${fileName}.txt`).then(() => {
           console.log('Failed to start Docker container, files removed')
         })
-        console.error(err);
-        res.json({ err: "Failed to start Docker container" });
-      });
+        console.error(err)
+        res.json({ err: 'Failed to start Docker container' })
+      })
   });
 };
 

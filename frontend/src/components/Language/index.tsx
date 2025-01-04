@@ -21,7 +21,7 @@ const Language: FC<LanguageProps> = ({
   const onLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     e.preventDefault()
     const languageOption = e.target.value
-
+    console.log('Selected option:', selectedLanguage)
     let language: string
     let modeValue: string
 

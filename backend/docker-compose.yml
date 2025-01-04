@@ -1,7 +1,37 @@
 version: '3.8'
+
 services:
-  coexe-backend:
-    build: .
+  cpp:
+    image: backend-cpp:v1
+    build:
+      context: ./dockerfiles/cpp
+      dockerfile: Dockerfile
+    volumes:
+      - ./utils/langController/cpp.ts:/usr/cpp/cpp.ts:ro
+    command: ["sh", "-c", "echo 'CPP environment ready'"]
+  
+  java:
+    image: backend-java:v1
+    build:
+      context: ./dockerfiles/java
+      dockerfile: Dockerfile
+    volumes:
+      - ./utils/langController/java.ts:/usr/java/java.ts:ro
+    command: ["sh", "-c", "java -version"]
+  
+  python:
+    image: backend-py:v1
+    build:
+      context: ./dockerfiles/python
+      dockerfile: Dockerfile
+    volumes:
+      - ./utils/langController/python.ts:/usr/py/python.ts:ro
+    command: ["sh", "-c", "python3 --version"]
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "4000:4000"
     volumes:
@@ -10,3 +40,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       PORT: 4000
+    depends_on:
+      - cpp
+      - java
+      - python

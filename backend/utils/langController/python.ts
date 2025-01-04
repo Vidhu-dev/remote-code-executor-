@@ -23,7 +23,7 @@ const py = (fileName: string, input: string, res: Response): void => {
     }
 
     // Start the Docker container
-    exec(`docker run -d -it py:v1 sh`)
+    exec(`docker run -d -it backend-py:v1 sh`)
       .then((response) => {
         const containerId = response.stdout.substring(0, 12)
         console.log(containerId)
